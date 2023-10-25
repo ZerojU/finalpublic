@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html, charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script src="/js/searchHistory.js"></script>
+    <title>Law API : QnaSearchForm</title>
+</head>
+<body>
+<!-- bulma container를 사용합니다-->
+<div class="container">
+    <!-- 기본 컨테이너에서 is-fluid의 경우 양쪽 여백 32px라고 합니다 -->
+    <div class="container is-fluid">
+        <!-- light는 배경 색 하얀 색이라고 합니다 -->
+        <section class="hero is-link">
+            <div class="hero-body">
+                <p class="title">
+                    <a href="/"> Law API -- Search Service </a>
+                </p>
+                <p class="subtitle">
+                    LASS에 어서오세요
+                </p>
+            </div>
+        </section>
+
+        <div class="tabs is-medium">
+            <ul>
+                <li><a href="legalqna">법률 Q&A</a></li>
+                <li><a href="clause">법령 검색</a></li>
+                <li><a href="precedent">판례 검색</a></li>
+                <li><a href="history">검색 기록</a></li>
+            </ul>
+        </div>
+
+        <div class="block">
+            <div class="content">
+                <p class="subtitle">
+                    본 페이지는 법령 관련 API를 제공받아 제작된 웹 서비스입니다.
+                </p>
+                <p>위쪽의 탭을 클릭하여 직접 검색하세요.</p>
+
+                <div class="notification is-link is-light">
+                    LASS는 Law Api Search Service의 줄임말입니다. <br>
+                    <a href="https://aiopen.etri.re.kr/guide/LegalQA" target="_blank"> AI API/DATA의 법률 검색 api</a>
+                    와
+                    <a href="https://open.law.go.kr/LSO/main.do" target="_blank"> 국가법령정보 공동활용</a>
+                    을 사용하여 제작되었습니다! <br>
+                </div>
+
+                <section class="section is-small"></section>
+            </div>
+        </div>
+
+
+
+        <footer class="footer" style="margin-top:100px">
+            <div class="content">
+                <p class="subtitle">
+                    LASS는 법령 관련 API를 제공받아 제작된 웹 서비스입니다.
+                </p>
+                <p>
+                    본 프로젝트는 <strong>2023년 클라우드 기반 JAVA 개발자 과정</strong>에서 Spring boot 학습을 위한 목적으로 만들어진 토이 프로젝트입니다.<br>
+                    제작 기간은 약 1달이며, Bulma css를 통해 디자인되었고 Elastic Beanstalk을 통해 배포되었습니다.
+                </p>
+                <p>
+                    제작자 @ 엄영진 uyzero1@gmail.com
+                </p>
+            </div>
+        </footer>
+
+    </div>
+</div>
+</body>
+</html>

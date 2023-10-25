@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html, charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script src="/js/searchHistory.js"></script>
+    <title>Law API : QnaSearchForm</title>
+</head>
+<body>
+<!-- bulma container를 사용합니다-->
+<div class="container">
+    <!-- 기본 컨테이너에서 is-fluid의 경우 양쪽 여백 32px라고 합니다 -->
+    <div class="container is-fluid">
+        <!-- light는 배경 색 하얀 색이라고 합니다 -->
+        <section class="hero is-link">
+            <div class="hero-body">
+                <p class="title">
+                    <a href="/"> Law API -- Search Service </a>
+                </p>
+                <p class="subtitle">
+                    법률 검색 서비스
+                </p>
+            </div>
+        </section>
+
+        <div class="tabs is-medium">
+            <ul>
+                <li class="is-active"><a href="legalqna">법률 Q&A</a></li>
+                <li><a href="clause">법령 검색</a></li>
+                <li><a href="precedent">판례 검색</a></li>
+                <li><a href="history">검색 기록</a></li>
+            </ul>
+        </div>
+
+        <div class="block">
+            <form name="search-qna" action="/search/legalqna" method="post" onsubmit="writeQnAHistory()">
+                <div class="field has-addons">
+                    <p class="control">
+                <span class="select">
+                  <select>
+                    <option>문장으로 검색</option>
+                  </select>
+                </span>
+                    </p>
+                    <p class="control is-expanded">
+                        <input id="qna-query" name="qna-query" required maxlength="200" class="input" type="text" placeholder="법에 관련된 질문을 입력해 보세요.">
+                    </p>
+                    <p class="control">
+                        <button class="button is-link" type="submit">검색</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <div class="block">
+            <div class="content">
+                <p> 한국 포함 35 개국의 헌법과 1,447 개의 국내 법률을 기반으로 한 검색 서비스입니다. </p>
+                <p> 법령 용어를 사용한 질문이거나, 법 조항에 가까운 질문일수록 검색 결과가 나올 확률이 높아집니다. </p>
+                <p> 정의형/단답형/서술형에 대한 질문에 답을 할 수 있습니다.</p>
+                <blockquote>
+                    가능한 질문의 예시 : <br>
+                    <ol>
+                        <li>태아도 상속순위에 포함되나요?</li>
+                        <li>임대차기간의 묵시적 갱신이란 무엇인가요?</li>
+                        <li>사람을 살해한 경우 어떤 처벌을 받게 되나요?</li>
+                        <li>어떤 경우에 친권이 상실되나요?</li>
+                        <li>35세인 사람은 대한민국 대통령이 될 수 있나요?</li>
+                        <li>배우자의 상속 순위는 어떻게 되나요?</li>
+                    </ol>
+                </blockquote>
+                <div class="notification is-danger is-light">
+                    검색어에 따라 검색 결과가 나오지 않을 수 있습니다. 이 경우 단어를 바꾸어 다시 검색해 보세요.
+                </div>
+                <p> 본 검색은 <a href="https://aiopen.etri.re.kr/guide/LegalQA" target="_blank"> AI API/DATA의 법률 검색 api</a>를 사용하고 있습니다.</p>
+
+                <section class="section is-small"></section>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

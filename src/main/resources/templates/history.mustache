@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html, charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <title>Law API : HistoryForm</title>
+</head>
+<body>
+<!-- bulma container를 사용합니다-->
+<div class="container">
+    <!-- 기본 컨테이너에서 is-fluid의 경우 양쪽 여백 32px라고 합니다 -->
+    <div class="container is-fluid">
+        <!-- light는 배경 색 하얀 색이라고 합니다 -->
+        <section class="hero is-link">
+            <div class="hero-body">
+                <p class="title">
+                    <a href="/"> Law API -- Search Service </a>
+                </p>
+                <p class="subtitle">
+                    검색 기록
+                </p>
+            </div>
+        </section>
+
+        <div class="tabs is-medium">
+            <ul>
+                <li><a href="legalqna">법률 Q&A</a></li>
+                <li><a href="clause">법령 검색</a></li>
+                <li><a href="precedent">판례 검색</a></li>
+                <li class="is-active"><a href="history">검색 기록</a></li>
+            </ul>
+        </div>
+
+        <div class="block">
+            <div class="content">
+                <blockquote> 기록은 검색에 따라 각각 최대 10개까지만 출력됩니다. 10개 이상이 될 경우 가장 오래된 검색기록부터 지워집니다. </blockquote>
+            </div>
+        </div>
+
+        <article class="panel is-link">
+            <div class="block">
+                <button class="button is-link is-inverted" onclick="getQnaHistory();">QnA 검색 기록</button>
+                <button class="button is-link is-inverted" onclick="getClauHistory();">법령 검색 기록</button>
+                <button class="button is-link is-inverted" onclick="getPrecHistory();">판례 검색 기록</button>
+            </div>
+
+            <!-- 검색 기록 -->
+            <div id="history"></div>
+        </article>
+
+        <!-- 화면 요소의 로딩이 필요하기 때문에 자바스크립트를 반복 요소 아래에 선언 -->
+        <script src="/js/localToSpring.js"></script>
+
+        <section class="section is-small"></section>
+    </div>
+</div>
+</body>
+</html>

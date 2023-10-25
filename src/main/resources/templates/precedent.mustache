@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html, charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script src="/js/searchHistory.js"></script>
+    <title>Law API : PrecedentSearchForm</title>
+</head>
+<body>
+<!-- bulma container를 사용합니다-->
+<div class="container">
+    <!-- 기본 컨테이너에서 is-fluid의 경우 양쪽 여백 32px라고 합니다 -->
+    <div class="container is-fluid">
+        <!-- light는 배경 색 하얀 색이라고 합니다 -->
+        <section class="hero is-link">
+            <div class="hero-body">
+                <p class="title">
+                    <a href="/"> Law API -- Search Service </a>
+                </p>
+                <p class="subtitle">
+                    판례 검색 서비스
+                </p>
+            </div>
+        </section>
+
+        <div class="tabs is-medium">
+            <ul>
+                <li><a href="legalqna">법률 Q&A</a></li>
+                <li><a href="clause">법령 검색</a></li>
+                <li class="is-active"><a href="precedent">판례 검색</a></li>
+                <li><a href="history">검색 기록</a></li>
+            </ul>
+        </div>
+
+        <div class="block">
+            <form name="search-precedent" action="/search/precedent" method="get" onsubmit="writePrecHistory()">
+                <div class="field has-addons">
+                    <p class="control">
+                <span class="select">
+                  <select id="precType" name="precType">
+                      <option selected value=1
+                          {{#isprecTypeSelected}}selected{{/isprecTypeSelected}} >판례 제목으로 검색</option>
+                      <option value=2
+                          {{#isprecTypeSelected}}selected{{/isprecTypeSelected}} >판례 내용으로 검색</option>
+                  </select>
+                </span>
+                    </p>
+                    <p class="control is-expanded">
+                        <input id="precedent-query" name="precedent-query" maxlength="200" class="input" type="text" placeholder="키워드를 입력하여 판례를 검색해 보세요.">
+                    </p>
+                    <input name="page" type="hidden" value="1">
+                    <p class="control">
+                        <button class="button is-link" type="submit">검색</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <div class="block">
+            <div class="content">
+                <p> 왼쪽의 검색 조건을 통해 [판례 제목 기준] 혹은 [판례 내용 기준] 검색을 할 수 있습니다. </p>
+                <p> 본 검색은 <a href="https://open.law.go.kr/LSO/main.do" target="_blank"> 국가법령정보 공동활용</a> 의 판례 목록 조회 api를 사용하고 있습니다.</p>
+                <div class="notification is-danger is-light">
+                    검색어에 따라 검색 결과가 나오지 않을 수 있습니다. 이 경우 단어를 바꾸어 다시 검색해 보세요.
+                </div>
+
+                <section class="section is-small"></section>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

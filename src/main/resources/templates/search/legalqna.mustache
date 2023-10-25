@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html, charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script src="/js/searchHistory.js"></script>
+    <title>Law API : QnaAnswerForm</title>
+</head>
+<body>
+<!-- bulma container를 사용합니다-->
+<div class="container">
+    <!-- 기본 컨테이너에서 is-fluid의 경우 양쪽 여백 32px라고 합니다 -->
+    <div class="container is-fluid">
+        <!-- light는 배경 색 하얀 색이라고 합니다 -->
+        <section class="hero is-link">
+            <div class="hero-body">
+                <p class="title">
+                    <a href="/"> Law API -- Search Service </a>
+                </p>
+                <p class="subtitle">
+                    법률 검색 서비스
+                </p>
+            </div>
+        </section>
+
+        <div class="tabs is-medium">
+            <ul>
+                <li class="is-active"><a href="../legalqna">법률 Q&A</a></li>
+                <li><a href="../clause">법령 검색</a></li>
+                <li><a href="../precedent">판례 검색</a></li>
+                <li><a href="../history">검색 기록</a></li>
+            </ul>
+        </div>
+
+        <div class="block">
+            <form name="search-precedent" action="/search/legalqna" method="post" onsubmit="writeQnAHistory()">
+                <div class="field has-addons">
+                    <p class="control">
+                <span class="select">
+                  <select>
+                    <option>문장으로 검색</option>
+                  </select>
+                </span>
+                    </p>
+                    <p class="control is-expanded">
+                        <input id="qna-query" name="qna-query" required value="{{question}}" class="input" type="text" placeholder="법에 관련된 질문을 입력해 보세요.">
+                    </p>
+                    <p class="control">
+                        <button class="button is-link" type="submit">검색</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <!-- 질문 결과가 없을 경우 출력 -->
+        {{^isListExists}}
+            <div class="block">
+                <div class="notification is-link is-light">
+                    <p> 질문 : {{question}} </p>
+                    <br>
+                    <p> 검색 결과가 없습니다. 단어를 바꾸어 다른 질문을 해 보세요. </p>
+                    <p> 본 검색은 <a href="https://aiopen.etri.re.kr/" target="_blank"> AI API/DATA</a> 의 법률 검색 api를 사용하고 있습니다.</p>
+                </div>
+            </div>
+        {{/isListExists}}
+
+        <!-- 질문 결과가 존재할 경우 출력-->
+        {{#isListExists}}
+            <div class="block">
+                <div class="notification is-link is-light">
+                    <p> 질문 : {{question}} </p>
+                    <br>
+                    <p> 질문에 따른 AI 검색 결과가 최대 5개 출력됩니다.</p>
+                    <p> 가장 처음 나오는(=맨 위의) 결과가 정답일 확률이 가장 높으며, 결과에 따른 키워드가 3개 추출됩니다. </p>
+                </div>
+            </div>
+
+            <div class="notification is-link is-light">
+                가장 신뢰도가 높은 결과를 바탕으로 추출한 빈출 명사입니다. <br>
+                {{#topThree}}
+                    {{.}}
+                {{/topThree}}
+            </div>
+
+            {{#answerInfoList}}
+                <div class="block">
+                    <div class="card">
+                        <header class="card-header">
+                            <p class="card-header-title">{{rank}} : {{answer}}</p>
+                        </header>
+                        <div class="card-content">
+                            <div class="content">
+                                <p> 근거 법령 : {{source}}</p>
+                                <p> 법령 상세 : {{clause}}</p>
+                                <p> 신뢰율 : {{confidence}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/answerInfoList}}
+        {{/isListExists}}
+
+        <section class="section is-small"></section>
+
+    </div>
+</div>
+</body>
+</html>

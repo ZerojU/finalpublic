@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html, charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script src="/js/searchHistory.js"></script>
+    <title>Law API : PrecedentResultForm</title>
+</head>
+<body>
+<!-- bulma container를 사용합니다-->
+<div class="container">
+    <!-- 기본 컨테이너에서 is-fluid의 경우 양쪽 여백 32px라고 합니다 -->
+    <div class="container is-fluid">
+        <!-- light는 배경 색 하얀 색이라고 합니다 -->
+        <section class="hero is-link">
+            <div class="hero-body">
+                <p class="title">
+                    <a href="/"> Law API -- Search Service </a>
+                </p>
+                <p class="subtitle">
+                    판례 검색 서비스
+                </p>
+            </div>
+        </section>
+
+        <div class="tabs is-medium">
+            <ul>
+                <li><a href="../legalqna">법률 Q&A</a></li>
+                <li><a href="../clause">법령 검색</a></li>
+                <li class="is-active"><a href="../precedent">판례 검색</a></li>
+                <li><a href="../history">검색 기록</a></li>
+            </ul>
+        </div>
+
+        <div class="block">
+            <form name="search-precedent" action="/search/precedent" method="get" onsubmit="writePrecHistory()">
+                <div class="field has-addons">
+                    <p class="control">
+                <span class="select">
+                    <!-- 페이지가 달라서 쿼리가 안 넘어가는 오류가 있을 수 있음!!! -->
+                    <!-- 검색창 메인 페이지와 결과창 페이지는 딱히 재사용하지 않았기 때문에 현재는 다르다는 것을 명심!!!!!!!!! -->
+                  <select id="precType" name="precType">
+                      <option selected value=1
+                              {{#isprecTypeSelected}}selected{{/isprecTypeSelected}} >판례 제목으로 검색</option>
+                      <option value=2
+                              {{#isprecTypeSelected}}selected{{/isprecTypeSelected}} >판례 내용으로 검색</option>
+                  </select>
+                </span>
+                    </p>
+                    <p class="control is-expanded">
+                        <input id="precedent-query" name="precedent-query" value="{{precQuery}}" class="input" type="text" placeholder="키워드를 입력하여 판례를 검색해 보세요.">
+                    </p>
+                    <p class="control">
+                        <button class="button is-link" type="submit">검색</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <div class="block">
+            <div class="notification is-link is-light">
+                <p> 검색 키워드 : {{precQuery}} </p>
+                <p> 검색 결과 : {{totalCount}} 개</p>
+                <br>
+                <form name="search-precedent" action="/search/precedent" method="get">
+                    <input name="precedent-query" type="hidden" value="{{precQuery}}">
+                    <input name="precType" type="hidden" value="{{precType}}">
+                    {{#pageDTO}}
+                        <div class="field is-grouped">
+                            <p class="control">
+                                <input id="pageFinder" class="input" type="text" name="page" placeholder="현재 페이지 : {{currentPage}}">
+                            </p>
+                            <p class="control">
+                                <button class="button is-link" type="submit">페이지 이동</button>
+                            </p>
+                        </div>
+                    {{/pageDTO}}
+                </form>
+            </div>
+        </div>
+
+        {{#precList}}
+            <div class="block" id="precList">
+                <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title"> {{id}} : {{caseName}}</p>
+                    </header>
+                    <div class="card-content">
+                        <div class="content">
+                            <p> 판례 일련번호 : {{precSerial}}</p>
+                            <p> 사건번호 : {{caseNum}}</p>
+                            <p> 선고 일자 및 법원명 : {{sentenceDate}} / {{courtName}}</p>
+                        </div>
+                    </div>
+                    <footer class="card-footer">
+                        <a href="https://www.law.go.kr/{{precViewLink}}" target="_blank" class="card-footer-item">판례 원문 보러 가기</a>
+                    </footer>
+                </div>
+            </div>
+        {{/precList}}
+
+        <div class="block">
+            <form name="search-precedent" action="/search/precedent" method="get">
+                <input name="precedent-query" type="hidden" value="{{precQuery}}">
+                <input name="precType" type="hidden" value="{{precType}}">
+
+                {{#pageDTO}}
+                    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                        <ul class="pagination-list">
+                            {{#previousPage}}
+                                <li><button type="submit" name="page" class="pagination-link" value="1">1</button></li>
+                                <li><span class="pagination-ellipsis">&hellip;</span></li>
+                            {{/previousPage}}
+                            {{#previousPage}}
+                                <li><button type="submit" name="page" class="pagination-link" value="{{previousPage}}">{{previousPage}}</button></li>
+                            {{/previousPage}}
+                            <li><button type="submit" name="page" class="pagination-link is-current" value="{{currentPage}}">{{currentPage}}</button></li>
+                            {{#nextPage}}
+                                <li><button type="submit" name="page" class="pagination-link" value="{{nextPage}}">{{nextPage}}</button></li>
+                            {{/nextPage}}
+                            {{#nextPage}}
+                                <li><span class="pagination-ellipsis">&hellip;</span></li>
+                                <li><button type="submit" name="page" class="pagination-link" value="{{lastPage}}">{{lastPage}}</button></li>
+                            {{/nextPage}}
+                        </ul>
+                    </nav>
+                {{/pageDTO}}
+            </form>
+        </div>
+
+        <!-- 자바스크립트 추가하여 제한을 걸었으나 컨트롤러에서 막았기에 주석 달아 둠 -->
+        <!-- <script src="/js/invalidAlert.js"></script> -->
+
+        <section class="section is-small"></section>
+
+    </div>
+</div>
+</body>
+</html>

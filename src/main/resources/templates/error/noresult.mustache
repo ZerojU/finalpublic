@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html, charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <title>Law API : QnaSearchForm</title>
+</head>
+<body>
+<!-- bulma container를 사용합니다-->
+<div class="container">
+    <!-- 기본 컨테이너에서 is-fluid의 경우 양쪽 여백 32px라고 합니다 -->
+    <div class="container is-fluid">
+        <!-- light는 배경 색 하얀 색이라고 합니다 -->
+        <section class="hero is-link">
+            <div class="hero-body">
+                <p class="title">
+                    <a href="/"> Law API -- Search Service </a>
+                </p>
+                <p class="subtitle">
+                    NO RESULT ERROR
+                </p>
+            </div>
+        </section>
+
+        <div class="tabs is-medium">
+            <ul>
+                <li><a href="../legalqna">법률 Q&A</a></li>
+                <li><a href="../clause">법령 검색</a></li>
+                <li><a href="../precedent">판례 검색</a></li>
+                <li><a href="../history">검색 기록</a></li>
+            </ul>
+        </div>
+
+        <div class="block">
+            <div class="content">
+                <section class="section is-medium">
+                    <h1 class="title" style="text-align:center">
+                        {{errorCode}}
+                    </h1>
+                    <h2 class="subtitle" style="text-align:center">
+                        {{errorMessage}}
+                    </h2>
+                </section>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

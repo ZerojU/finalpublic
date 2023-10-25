@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html, charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script src="/js/searchHistory.js"></script>
+    <title>Law API : clauseResultForm</title>
+</head>
+<body>
+<!-- bulma container를 사용합니다-->
+<div class="container">
+    <!-- 기본 컨테이너에서 is-fluid의 경우 양쪽 여백 32px라고 합니다 -->
+    <div class="container is-fluid">
+        <!-- light는 배경 색 하얀 색이라고 합니다 -->
+        <section class="hero is-link">
+            <div class="hero-body">
+                <p class="title">
+                    <a href="/"> Law API -- Search Service </a>
+                </p>
+                <p class="subtitle">
+                    법령 검색 서비스
+                </p>
+            </div>
+        </section>
+
+        <div class="tabs is-medium">
+            <ul>
+                <li><a href="../legalqna">법률 Q&A</a></li>
+                <li class="is-active"><a href="../clause">법령 검색</a></li>
+                <li><a href="../precedent">판례 검색</a></li>
+                <li><a href="../history">검색 기록</a></li>
+            </ul>
+        </div>
+
+        <div class="block">
+            <form name="search-precedent" action="/search/clause" method="get" onsubmit="writeClauHistory()">
+                <div class="field has-addons">
+                    <p class="control">
+                <span class="select">
+                    <!-- 페이지가 달라서 쿼리가 안 넘어가는 오류가 있을 수 있음!!! -->
+                    <!-- 검색창 메인 페이지와 결과창 페이지는 딱히 재사용하지 않았기 때문에 현재는 다르다는 것을 명심!!!!!!!!! -->
+                  <select id="clauType" name="clauType">
+                      <option selected value=1
+                              {{#isclauseTypeSelected}}selected{{/isclauseTypeSelected}} >법령 이름으로 검색</option>
+                      <option value=2
+                              {{#isclauseTypeSelected}}selected{{/isclauseTypeSelected}} >법령 내용으로 검색</option>
+                  </select>
+                </span>
+                    </p>
+                    <p class="control is-expanded">
+                        <input id="clause-query" name="clause-query" value="{{clauQuery}}" class="input" type="text" placeholder="키워드를 입력하여 법령(조항)을 검색해 보세요.">
+                    </p>
+                    <p class="control">
+                        <button class="button is-link" type="submit">검색</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <div class="block">
+            <div class="notification is-link is-light">
+                <p> 검색 키워드 : {{clauQuery}} </p>
+                <p> 검색 결과 : {{totalCount}} 개</p>
+                <br>
+                <form name="search-precedent" action="/search/clause" method="get">
+                    <input name="clause-query" type="hidden" value="{{clauQuery}}">
+                    <input name="clauType" type="hidden" value="{{clauType}}">
+                    {{#pageDTO}}
+                        <div class="field is-grouped">
+                            <p class="control">
+                                <input class="input" type="text" name="page" placeholder="현재 페이지 : {{currentPage}}">
+                            </p>
+                            <p class="control">
+                                <button class="button is-link" type="submit">페이지 이동</button>
+                            </p>
+                        </div>
+                    {{/pageDTO}}
+                </form>
+            </div>
+        </div>
+
+        {{#clauList}}
+            <div class="block">
+                <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title"> {{id}} : {{clauKoOrigin}}</p>
+                    </header>
+                    <div class="card-content">
+                        <div class="content">
+                            <p> 법령 일련번호 : {{clauSerial}}</p>
+                            <p> 법령 약칭명 : {{clauKoShort}}</p>
+                            <p> 공포 일자 및 소관 부처명 : {{promulDate}} / {{ministry}}</p>
+                            <p> 시행 일자 : {{enforceDate}}</p>
+                        </div>
+                    </div>
+                    <footer class="card-footer">
+                        <a href="https://www.law.go.kr/DRF/lawService.do?OC=elnath254&target=lsStmd&ID={{clauID}}&type=HTML"
+                        target="_blank" class="card-footer-item">법령체계도 확인하기</a>
+                        <a href="https://www.law.go.kr/{{clauViewLink}}" target="_blank" class="card-footer-item">법령 상세 보러 가기</a>
+                    </footer>
+                </div>
+            </div>
+        {{/clauList}}
+
+        <div class="block">
+            <form name="search-precedent" action="/search/clause" method="get">
+                <input name="clause-query" type="hidden" value="{{clauQuery}}">
+                <input name="clauType" type="hidden" value="{{clauType}}">
+                {{#pageDTO}}
+                    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                        <ul class="pagination-list">
+                            {{#previousPage}}
+                            <li><button type="submit" name="page" class="pagination-link" value="1">1</button></li>
+                            <li><span class="pagination-ellipsis">&hellip;</span></li>
+                            {{/previousPage}}
+                            {{#previousPage}}
+                                <li><button type="submit" name="page" class="pagination-link" value="{{previousPage}}">{{previousPage}}</button></li>
+                            {{/previousPage}}
+                            <li><button type="submit" name="page" class="pagination-link is-current" value="{{currentPage}}">{{currentPage}}</button></li>
+                            {{#nextPage}}
+                                <li><button type="submit" name="page" class="pagination-link" value="{{nextPage}}">{{nextPage}}</button></li>
+                            {{/nextPage}}
+                            {{#nextPage}}
+                            <li><span class="pagination-ellipsis">&hellip;</span></li>
+                            <li><button type="submit" name="page" class="pagination-link" value="{{lastPage}}">{{lastPage}}</button></li>
+                            {{/nextPage}}
+                        </ul>
+                    </nav>
+                {{/pageDTO}}
+            </form>
+        </div>
+
+        <section class="section is-small"></section>
+
+    </div>
+</div>
+</body>
+</html>
